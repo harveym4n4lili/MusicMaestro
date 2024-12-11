@@ -16,9 +16,3 @@ A web application built as part of my university coursework for managing music a
 - **Frontend**: React.js  
 - **Styling**: Bootstrap  
 - **API**: Django REST Framework  
-
-## Setup Instructions  
-1. **Clone the Repository**:  
-   ```bash
-   git clone https://github.com/username/album-manager-webapp.git
-   cd album-manager-webapp
