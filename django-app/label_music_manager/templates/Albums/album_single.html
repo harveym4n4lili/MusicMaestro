@@ -1,0 +1,64 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+{{ album.title }} - Details
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ album.title }}</h1>
+
+    <div>
+        {% if user.musicmanageruser.role == 'artist' or user.musicmanageruser.role == 'editor' %}
+            <a href="{% url 'album-edit-BOP' album.pk %}" class="btn btn-primary">Edit album</a>
+            <a href="{% url 'album-delete-BOP' album.pk %}" class="btn btn-danger">Delete album</a>
+        {% endif %}
+    </div>
+
+    <div class="card p-3 mt-3">
+        <div class="row">
+            <div class="col-md-auto">
+                <!-- Image Section -->
+                <img src="{{ album.cover.url }}" alt="{{ album.title }} Cover" 
+                class="img-fluid" 
+                style="max-width: 300px; max-height: 300px;">
+            </div>
+            <div class="col">
+                <!-- Text Section -->
+                <div class="card-body">
+                    <h6 class="card-subtitle text-muted mb-2">By {{ album.artist }}</h6>
+                    
+                    <p class="card-text" style="flex-grow: 1; overflow-y: auto; max-height: 150px;">
+                        {{ album.description }} <br>
+                    </p>
+
+                    <p class="card-text">
+                        <strong>£{{ album.price }} ({{ album.get_format_display }}) </strong><br>
+                            Out on {{ album.release_date }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="card mt-3">
+        <div class="col-md">
+            {% if tracks %}
+            <h3 class="card-title m-3">Tracklist</h3>
+            <ul>
+                {% for track in tracks %}
+                    <li class="list-group-item">
+                        <strong>{{ track.position }}.</strong> {{ track.song.title }} ({{ track.song.runningTime }} seconds)
+                    </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <h4 class="card-title m-4 text-muted">No songs are available for this album.</h4>
+            {% endif %}
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

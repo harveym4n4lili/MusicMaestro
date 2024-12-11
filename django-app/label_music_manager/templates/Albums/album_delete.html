@@ -1,0 +1,18 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+Delete Album
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-danger">DELETEION CONFIRMATION</h1>
+    <p>Are you sure you want to delete the album <strong>{{ album.title }}</strong> by <strong>{{ album.artist }}</strong>?</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete {{ album.title }}</button>
+        <a href="{% url 'album-list-BOP' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Album List
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    
+    {% if user.is_authenticated and user.musicmanageruser.role == 'editor' %}
+    <a href="{% url 'album-create-BOP' %}" class="btn btn-success">Add New Album</a>
+    {% endif %}
+
+
+    {% for item in albums %}
+    <a href="{% url 'album-view-BOP' id=item.id %}" class="card p-3 w-80 mx-auto d-flex mt-4" style="text-decoration: none;">
+        <div class="row no-gutters" style="width: 100%;">
+            <div class="col-md-auto" style="padding: 0;">
+                <!-- Image Section -->
+                <img src="{{ item.cover.url }}" alt="{{ item.title }} Cover" 
+                class="img-fluid" 
+                style="max-width: 300px; max-height: 300px;">
+            </div>
+            <div class="col-md">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <h6 class="card-subtitle text-muted mb-2">By {{ item.artist }}</h6>
+                    <p class="card-text" style="flex-grow: 1; overflow-y: auto; max-height: 150px;">
+                        {{ item.description }} <br>
+                    </p>
+                    <p class="card-text">
+                        <strong>£{{ item.price }} ({{ item.get_format_display }}) </strong><br>
+                    </p>
+                </div>
+            </div>
+        </div>                    
+    </a>
+        
+    {% endfor %}
+</div>
+{% endblock %}
